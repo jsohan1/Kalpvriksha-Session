@@ -1,0 +1,70 @@
+Input /Output : 
+=>When a program is executed, it might need the input data for further execution. This input can taken by different library functions in c.
+=> Input can either be taken from console or a file. Different functions are used in both ways.
+=> The functions scanf() and printf() used as console I/O functions. These funtions are used to take input from console(when user type the input values , these functions are used to take input in the program)
+=> scanf() read the input while printf() is used to display the output .
+=> These functions contain the format of input or output. The formatting syntax of format argument in these function might consist of following things:
+	
+%[flag][width][precision][length]specifier
+	
+Flag : Flag value might be 0 , - , + 
+
+'+' is used to print the signed value along with the sign.
+'-' is used to left align the printing of the data.
+'0' is used to achieve the padding of zeroes in numeric values or data. 
+
+Width :  It gives the width in which the data need to be printed. For example in scanf() function if "%5s" will be used to take only 5 characters, no matter how many characters you insert as input. 
+
+Precision : Precision might be used in values like float or string. In float it is used to decide the no. of decimal values to be printed after decimal and in string it is used to decide the no. of character need to be printed of the string.
+
+For example scanf("%-10.3f",val);
+Here val is a variable of float type. 
+Lets break down this fomat string syntax here 
+'-' = indicated the output to be printed left align. 
+'10' = indicate the width in which ouput need to be printed 
+.3 is precision which shows that float value will be printed upto 3 values after decimal.
+'f' specifies the value is float type.
+
+Scanset[] : -
+Its denoted by %[] . Inside this sqaure bracket, we can mention the character which we want scanf to process. For example if we want to take only a,b,c,d,e we can mention this character inside the scanset as scanf("%[a,b,c,d,e]s",str) where str is a character array.
+While processing the input, it will stop when it encounter any other character other than these character. 
+If we want to take a sentence as input (which contains space characters) then scanf can be used in this way :
+scanf("%[^\n]s",sentence);
+This will keep on processing the characters of the string untill it found the null characters. 
+
+There are different format specifier used for different type of data. For exa ple :
+integer - %d
+float - %f
+double - %lf
+long double - %Lf
+
+There are different functions which are used as taking input and take input in different way, Here are few of functions :
+getc() - This function take the character as input and return integer(ASCII) value of the character.
+
+getchar() - Work just like getc() but the difference is that it only take input form std i/o stream. 
+These both functions wait for user to press enter to move further
+
+getch() - Take character in input but does not echo it to the output console and do not keep it in buffer
+ 
+getche() - Take character and echo it on the console output. 
+These both functions does not wait for user to press enter.
+
+putc() -  used to write the character in std ouput or any other file.
+Hence we need to specify the stream where output need to be written. For example putc('a',stdout) here stdout specify the stream to be standart output.
+
+putchar() - used to write the character in std ouput.
+
+gets() - This function is used to read the sentence along with spaces untill newline character is obtained.
+It does not check the overflow condition.
+
+fgets() - It also work as gets() but encounter the overflow condition. It can take input from any stream (stdin or any other stream). 
+fgets(str,size,stdin);
+this will take input of size "size" form standard input and put in string str.
+
+puts() - It prints the string including whitespace character. And it will print the newline character at the end of the string on its own.
+fputs() -  It work as same as that of puts but it can write in any stream and does not append a newline character at the end of it.
+
+
+
+Arrays  : Array is a linear data structure which stored data of similar type in contigous memory blocks. 
+
