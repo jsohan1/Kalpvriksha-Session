@@ -2,129 +2,128 @@
 #include<conio.h>
 #include<stdlib.h>
 
-typedef struct Node{
+typedef struct node node;
+struct node{
     int data;
-    struct Node*next,*prev;
-}node;
-node* insertAtHead(node* head,int val){
-    node* newnode = (node*)malloc(sizeof(node));
-    newnode->data=val;
-    if(head == NULL){
-        newnode->next = newnode->prev = NULL;
-        return newnode;
-    }
-    newnode->next = head;
-    newnode->prev = NULL;
-    head -> prev = newnode;
-    head = newnode;
-    return head;
-}
-node *insertAtTail(node* head,int val){
-    if(head==NULL){
-        return insertAtHead(head,val);
-    }
-    node* rt = head;
-    node* newnode = (node*)malloc(sizeof(node));
-    newnode->data=val;
-    while(head->next){
-        head=head->next;
-    }
-    head -> next = newnode;
-    newnode->prev = head;
-    newnode->next = NULL;
+    node* next,*prev;
+};
+
+node* createNode(int val){
+    node* rt = (node*)malloc(sizeof(node));
+    rt->next = NULL;
+    rt->prev = NULL;
+    rt->data=val;
     return rt;
 }
-node* insertAtPosition(node*head,int position,int val){
+node* insertAtHead(node*head,int val){
+    node* nd = createNode(val);
+    if(head==NULL){
+        head = nd;
+        return head;
+    }
+    nd->next = head;
+    head->prev = nd;
+    head = nd;
+    return head;
+}
+node* insertAtTail(node* head,int val){
+    node* nd = createNode(val);
+    node* rt = head;
+    if(rt == NULL){
+        return insertAtHead(head,val);
+    }
+    while(head->next){
+        head = head->next;
+    }
+    head -> next = nd;
+    nd->prev = head;
+    return rt;
+}
+node* insertAtPosition(node* head,int val, int position){
     if(position==1){
         return insertAtHead(head,val);
     }
-    node*rt = head;
-    int i = 1;
+    node * rt  = head;
+    node * nd = createNode(val);
+    int i = 1 ;
     while(i!=position-1){
-        head = head->next;
         i++;
+        head = head -> next;
     }
-    if(head->next==NULL){
-        return insertAtTail(rt,val);
-    }
-    node* newnode = (node*)malloc(sizeof(node));
-    newnode->data=val;
-    newnode->prev = head;
-    newnode->next = head->next;
-    head->next->prev = newnode;
-    head ->next = newnode;
+    nd->next = head->next;
+    head->next->prev = nd;
+    head ->next = nd;
+    nd->prev = head;
     return rt;
 }
-void printLinkedList(node* head){
-    // printf("printing head\n");
-    while(head){
-        printf("%d ",head->data);
-        head = head->next;
-    }
-}
-node *deleteAtHead(node* head){
-    if(!head){
+node* deleteAtHead(node* head){
+    if(head==NULL){
         return NULL;
     }
-    node* dl = head;
-    head = head->next;
-    head->prev=NULL;
+    node * dl = head;
+    head = head ->  next ;
+    head -> prev = NULL;
     free(dl);
     return head;
 }
-node* deleteAtTail(node*head){
+node* deleteAtTail(node* head){
     if(!head)return NULL;
-
     if(!(head->next)){
         free(head);
-        return NULL;
+        head = NULL;
+        return head;
     }
     node* rt = head;
     while(head->next->next){
         head = head->next;
     }
-    node* dl = head->next;
+    node* dl = head -> next;
     head->next = NULL;
     free(dl);
     return rt;
 }
-node* deleteAtPosition(node*head,int position){
+node* deleteAtPosition(node* head,int position){
     if(position==1){
         return deleteAtHead(head);
     }
-    int i = 1;
     node* rt = head;
+    int i = 1; 
     while(i!=position-1){
-        head = head->next;
+        head = head -> next;
         i++;
     }
-    if(head->next->next==NULL){
-        return deleteAtTail(rt);
-    }
     node* dl = head->next;
-    // printf("deleting %d",head->next->next->data);
     head->next = head->next->next;
-    dl->next->prev = head;
+    head->next->prev = head;
     free(dl);
-    // printf("returing\n");
     return rt;
 }
 
+void printList(node* head){
+    while(head){
+        printf("%d ",head->data);
+        head = head->next;
+    }
+}
+void printReverseList(node*head){
+    while(head->next){
+        head = head->next;
+    }
+    while(head){
+        printf("%d ",head->data);
+        head = head->prev;
+    }
+}
 int main(){
-    node * head = NULL;
-    head = insertAtHead(head,4);
-    head = insertAtTail(head,78);
-    head = insertAtHead(head,74);
-    head = insertAtPosition(head,3,100);
-    printLinkedList(head);
-    // printf("deleting\n");
-    // head = deleteAtHead(head);   
-    // printLinkedList(head);
-    // head = deleteAtTail(head);   
-    // printf("\n");
-    // printLinkedList(head);
-        head = deleteAtPosition(head,1);   
-    printf("\n");
-    printLinkedList(head);
-    return 0;
+   node* head = NULL;
+   head = insertAtTail(head,34);
+   head = insertAtHead(head,23);
+   head = insertAtPosition(head,100,1);
+   printList(head);
+   printf("\n");
+   printReverseList(head);
+   head = deleteAtPosition(head,3);
+   printf("\n");
+   printList(head);
+   return 0; 
 }
