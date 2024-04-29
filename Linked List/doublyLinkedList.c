@@ -62,7 +62,7 @@ node* deleteAtHead(node* head){
     }
     node * dl = head;
     head = head ->  next ;
-    head -> prev = NULL;
+    if(head){head -> prev = NULL;}
     free(dl);
     return head;
 }
@@ -106,12 +106,22 @@ void printList(node* head){
     }
 }
 void printReverseList(node*head){
+    if(!head){
+        return ;
+    }
     while(head->next){
         head = head->next;
     }
     while(head){
         printf("%d ",head->data);
         head = head->prev;
+    }
+}
+void deleteEntireList(node* head){
+    while(head){
+        node* temp = head;
+        head = head->next;
+        free(temp);
     }
 }
 int main(){
@@ -125,5 +135,6 @@ int main(){
    head = deleteAtPosition(head,3);
    printf("\n");
    printList(head);
+   deleteEntireList(head);
    return 0; 
 }

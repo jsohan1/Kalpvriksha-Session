@@ -98,7 +98,13 @@ void printList(node* head){
         head = head->next;
     }
 }
-
+void deleteEntireList(node* head){
+    while(head){
+        node* temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
 int main(){
    node* head = NULL;
    head = insertAtTail(head,34);
@@ -107,5 +113,6 @@ int main(){
 
    printf("\n");
    printList(head);
+   deleteEntireList(head);
    return 0; 
 }
